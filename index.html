@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript TimeLine Project</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing:border-box;   
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            background-color:#222;
+        }
+        .container{
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        #timeLine{
+            border-left: 2px solid #333;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .event{
+            margin-bottom: 10px;
+        }
+        .eventTitle{
+            font-weight: bolder;
+            color: #0000ff;
+            font-size: xx-large;
+        }
+        .eventDate{
+            color: #888;
+        }
+        #btn{
+            background-color: #57d757;
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: x-large;
+            font-weight: 600;
+            margin-left: 30px;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: #008000;
+        }
+        .inputField{
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .inputTitle{
+            color: #008000;
+            font-size: x-large;
+            font-weight:500;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div id="timeLine"></div>
+        <form id="eventForm">
+            <label for="eventTitle" class="inputTitle">Event Title :</label>
+            <input type="text" id="eventTitle" required class="inputField">
+            <label for="eventDate" class="inputTitle">Event Date: </label>
+            <input type="date" id="eventDate" required class="inputField">
+            <button type="submit" id="btn">Add Event</button>
+        </form>
+    </div>
+
+
+    <script>
+
+        let timeLine = document.getElementById('timeLine');
+
+        let eventForm = document.getElementById('eventForm');
+
+        eventForm.addEventListener('submit',function(e){
+            e.preventDefault();
+
+            let eventTitle = document.getElementById('eventTitle').value;
+
+            let eventDate = document.getElementById('eventDate').value;
+
+            if(eventTitle && eventDate){
+                addEvent(eventTitle, eventDate);
+                eventForm.reset();
+            }
+        });
+
+        function addEvent(title , date){
+            const eventDiv = document.createElement('div');
+
+            eventDiv.classList.add('event');
+
+            const titleDiv = document.createElement('div');
+            titleDiv.classList.add('eventTitle');
+            titleDiv.textContent = title;
+
+            const dateDiv = document.createElement('div');
+            dateDiv.classList.add('eventDate');
+            dateDiv.textContent = formatDate(date);
+
+            eventDiv.appendChild(titleDiv);
+            eventDiv.appendChild(dateDiv);
+
+            timeLine.appendChild(eventDiv);
+    
+        }
+
+        function formatDate(dataString){
+            const option = { year: 'numeric' , month: 'long' , day: 'numeric' };
+
+            const date = new Date(dataString);
+
+            return date.toLocaleDateString('en-US',option);
+        }
+
+    </script>
+</body>
+</html>
